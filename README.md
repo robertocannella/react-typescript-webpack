@@ -53,7 +53,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            template: './src/index.html',
+            inject: false
         })
     ]
 }
@@ -75,8 +76,57 @@ add script to ```package.json```:
     "start": "webpack serve --mode development"
   },
 ```
+## Setup ~ ts-loader
 
+Install typescript and ts-loader as Dev Dependencies:
+```
+npm i -D typescript ts-loader
+```
 
+Create ```tsconfgi.json```:
+```
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "es6",
+        "strict": true, 
+    }
+}
+```
+note* may need ot restart VSCode if getting a include error.
+
+Change entry file to ```index.ts``` in ```webpack.config.js```:
+```
+module.exports = {
+    entry: './src/index.tx',
+```
+resolve filename extensions:
+```
+module.exports = {
+    entry: './src/index.tx',
+    resolve: {
+        extensions: ['.js', '.ts', '.tsx']
+    },
+```
+Add ts-loader:
+```
+module.exports = {
+...
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
+            }
+        ]
+    },
+  ...
+```
+
+Change the TypeScript Compiler from the defualt VSCode version to the one just install: 
+
+Select a typescript file in the explorer > select ```{ }``` on the bottom toolbar > select version > Use Workspace version.
 
 
 
