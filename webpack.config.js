@@ -1,7 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: './src/index.tsx',
+    devtool: 'eval-source-map',
     resolve: {
         extensions: ['.js', '.ts', '.tsx']
     },
@@ -9,7 +10,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader',
+                loader: 'babel-loader',
                 exclude: /node_modules/
             }
         ]
@@ -17,7 +18,6 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
-            inject: false
         })
     ],
 

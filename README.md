@@ -93,7 +93,7 @@ Create ```tsconfgi.json```:
     }
 }
 ```
-note* may need ot restart VSCode if getting a include error.
+note* may need ot restart VSCode if getting a include error. Alternatively you may restart TS Server (cmd/shift/p) 
 
 Change entry file to ```index.ts``` in ```webpack.config.js```:
 ```
@@ -129,5 +129,131 @@ Change the TypeScript Compiler from the defualt VSCode version to the one just i
 Select a typescript file in the explorer > select ```{ }``` on the bottom toolbar > select version > Use Workspace version.
 
 
+## Setup ~ bable-loader
+If using @babel project (next.js)
+```
+npm i -D @babel/core @babel/preset-env @babel/preset-typescript
+```
+Regsiter presets with @babel:
+create ```.babelrc``` in project root:
+
+```
+{
+    "presets": ["@babel/preset-env", "@babel/preset-typescript"]
+}
+```
+Install babel-loader:
+```
+npm i -D babel-loader
+```
+Change reference in webpack for typescript files if using babel-loader:
+```
+...
+    rules: [
+        {
+            test: /\.tsx?$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/
+        }
+    ]
+...
+```
+The @babel/preset-typescript does not check for error. It simply removes the types.  In order to typecheck the code the typescript compiler needs to be run in sequence.  To address this, tweek ```tsconfig.json```:
+
+```
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "es6",
+        "strict": true, 
+        "noEmit": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+    },
+    "include": ["./src/**/*"]
+}
+```
 
 
+To type check before each build, adjust the following scripts in ```package.json```
+
+```
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run type-check && webpack --mode production",
+    "start": "webpack-dev-server -open --mode development",
+    "type-check": "tsc"
+  },
+  ```
+
+## Setup ~ react react-dom
+Install react and react-dom as Normal Dependencies
+```
+npm i -S react react-dom
+```
+Install @babel types for typechecking as Dev Dependencies:
+
+```
+npm i -D @types/react @types/react-dom
+```
+tweak ```tsconfig.json``` for .jsx extensions:
+
+```
+    ...
+        "skipLibCheck": true,
+        "jsx": "react",
+    },
+```
+rename ```index.js``` to ```index.tsx``` and replace contents as: 
+```
+import React from "react";
+import  ReactDOM from "react-dom";
+
+const App = ()=>{
+    return <div>Hello World</div>;
+}
+
+ReactDOM.render(<App/>, document.getElementById('root'))
+```
+Add root div to index.html:
+```
+...
+<body>
+    <div id="root"></div>
+</body>
+...
+```
+Install react preset 
+
+```
+npm i -D @babel/preset-react
+```
+...and enable it in ```.babelrc```
+```
+{
+    "presets": 
+    [
+        "@babel/preset-env",
+        "@babel/preset-react",
+         "@babel/preset-typescript"
+     ]
+}
+```
+## eval-source-map
+for mapping errors in the browser to the original source file line code, adjust ```webpack.config.js```:
+```
+module.exports = {
+    entry: './src/index.tsx',
+    devtool: 'eval-source-map',
+    resolve: {
+```
+If using ```ts-loader``` adjust tsconfig.json as well:
+
+```
+"compilerOptions": {
+    ...
+    "jsx": "react",
+    "sourceMap": true,
+},
+```
