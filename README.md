@@ -34,9 +34,9 @@ npm run build
 ```
 * Publish to github.com
 
-Select source control > Publish to GitHub > Private/Public > Uncheck ```node_modules``` & ```dist``` folders.
+Select source control > Publish to GitHub > Private/Public > Uncheck ```node_modules``` & ```dist``` folders. This last part creates a ```.gitignore``` file
 
-## Configuration:
+## Setup ~ html-webpack-plugin:
 Add ```index.html``` with general HTML template to ```src/``` directory.
 
 Install Html-Webpack-Plugin as a Dev Dependency:
@@ -63,6 +63,18 @@ module.exports = {
 npm run build
 ```
 
+## Setup ~ webpack-dev-server
+Install webpack-dev-server as a Dev Dependency:
+```
+npm i -D webpack-dev-server
+```
+add script to ```package.json```:
+```
+  "scripts": {
+    ...
+    "start": "webpack serve --mode development"
+  },
+```
 
 
 
