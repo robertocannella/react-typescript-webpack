@@ -93,7 +93,7 @@ Create ```tsconfgi.json```:
     }
 }
 ```
-note* may need ot restart VSCode if getting a include error.
+note* may need ot restart VSCode if getting a include error. Alternatively you may restart TS Server (cmd/shift/p) 
 
 Change entry file to ```index.ts``` in ```webpack.config.js```:
 ```
@@ -129,7 +129,7 @@ Change the TypeScript Compiler from the defualt VSCode version to the one just i
 Select a typescript file in the explorer > select ```{ }``` on the bottom toolbar > select version > Use Workspace version.
 
 
-## Setup ~ -loader
+## Setup ~ bable-loader
 If using @babel project (next.js)
 ```
 npm i -D @babel/core @babel/preset-env @babel/preset-typescript
@@ -187,4 +187,56 @@ To type check before each build, adjust the following scripts in ```package.json
   },
   ```
 
+## Setup ~ react react-dom
+Install react and react-dom as Normal Dependencies
+```
+npm i -S react react-dom
+```
+Install @babel types for typechecking as Dev Dependencies:
 
+```
+npm i -D @types/react @types/react-dom
+```
+tweak ```tsconfig.json``` for .jsx extensions:
+
+```
+    ...
+        "skipLibCheck": true,
+        "jsx": "react",
+    },
+```
+rename ```index.js``` to ```index.tsx``` and replace contents as: 
+```
+import React from "react";
+import  ReactDOM from "react-dom";
+
+const App = ()=>{
+    return <div>Hello World</div>;
+}
+
+ReactDOM.render(<App/>, document.getElementById('root'))
+```
+Add root div to index.html:
+```
+...
+<body>
+    <div id="root"></div>
+</body>
+...
+```
+Install react preset 
+
+```
+npm i -D @babel/preset-react
+```
+...and enable it in ```.babelrc```
+```
+{
+    "presets": 
+    [
+        "@babel/preset-env",
+        "@babel/preset-react",
+         "@babel/preset-typescript"
+     ]
+}
+```
