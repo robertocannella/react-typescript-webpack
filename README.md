@@ -129,5 +129,62 @@ Change the TypeScript Compiler from the defualt VSCode version to the one just i
 Select a typescript file in the explorer > select ```{ }``` on the bottom toolbar > select version > Use Workspace version.
 
 
+## Setup ~ -loader
+If using @babel project (next.js)
+```
+npm i -D @babel/core @babel/preset-env @babel/preset-typescript
+```
+Regsiter presets with @babel:
+create ```.babelrc``` in project root:
+
+```
+{
+    "presets": ["@babel/preset-env", "@babel/preset-typescript"]
+}
+```
+Install babel-loader:
+```
+npm i -D babel-loader
+```
+Change reference in webpack for typescript files if using babel-loader:
+```
+...
+    rules: [
+        {
+            test: /\.tsx?$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/
+        }
+    ]
+...
+```
+The @babel/preset-typescript does not check for error. It simply removes the types.  In order to typecheck the code the typescript compiler needs to be run in sequence.  To address this, tweek ```tsconfig.json```:
+
+```
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "es6",
+        "strict": true, 
+        "noEmit": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+    },
+    "include": ["./src/**/*"]
+}
+```
+
+
+To type check before each build, adjust the following scripts in ```package.json```
+
+```
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run type-check && webpack --mode production",
+    "start": "webpack-dev-server -open --mode development",
+    "type-check": "tsc"
+  },
+  ```
 
 
