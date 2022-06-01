@@ -240,3 +240,20 @@ npm i -D @babel/preset-react
      ]
 }
 ```
+## eval-source-map
+for mapping errors in the browser to the original source file line code, adjust ```webpack.config.js```:
+```
+module.exports = {
+    entry: './src/index.tsx',
+    devtool: 'eval-source-map',
+    resolve: {
+```
+If using ```ts-loader``` adjust tsconfig.json as well:
+
+```
+"compilerOptions": {
+    ...
+    "jsx": "react",
+    "sourceMap": true,
+},
+```

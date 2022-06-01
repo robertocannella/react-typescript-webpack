@@ -2,13 +2,15 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "es6",
-        "strict": true, 
+        "strict": true,
         "noEmit": true,
         "isolatedModules": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "jsx": "react",
+        "sourceMap": true,
     },
-    "include": ["./src/**/*"]
+    "include": [
+        "./src/**/*"
+    ]
 }
-
