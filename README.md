@@ -98,7 +98,7 @@ note* may need ot restart VSCode if getting a include error. Alternatively you m
 Change entry file to ```index.ts``` in ```webpack.config.js```:
 ```
 module.exports = {
-    entry: './src/index.tx',
+    entry: './src/index.ts',
 ```
 resolve filename extensions:
 ```
@@ -124,7 +124,7 @@ module.exports = {
   ...
 ```
 
-Change the TypeScript Compiler from the defualt VSCode version to the one just install: 
+Change the TypeScript Compiler from the default VSCode version to the one just install: 
 
 Select a typescript file in the explorer > select ```{ }``` on the bottom toolbar > select version > Use Workspace version.
 
@@ -134,7 +134,7 @@ If using @babel project (next.js)
 ```
 npm i -D @babel/core @babel/preset-env @babel/preset-typescript
 ```
-Regsiter presets with @babel:
+Register presets with @babel:
 create ```.babelrc``` in project root:
 
 ```
