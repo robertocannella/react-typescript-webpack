@@ -9,6 +9,8 @@
         "skipLibCheck": true,
         "jsx": "react",
         "sourceMap": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
     },
     "include": [
         "./src/**/*"
