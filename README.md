@@ -205,14 +205,15 @@ tweak ```tsconfig.json``` for .jsx extensions:
         "jsx": "react",
     },
 ```
-rename ```index.js``` to ```index.tsx``` and replace contents as: 
-
 update the entry point inside  ```webpack.config.js```
+
+
 
 ```
     entry: "./src/index.tsx",
 ```
 
+rename ```index.js``` to ```index.tsx``` and replace contents as: 
 
 ```
 import React from "react";
